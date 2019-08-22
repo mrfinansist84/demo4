@@ -1,0 +1,126 @@
+@import '../Utilities/variables.scss';
+
+.ProfileWrapper-flex{
+  display: flex;
+  flex-direction: row;
+  flex-grow: 4;
+  transition: 0.5s ease-in-out;
+}
+.ProfilePageWrapper{
+  display: flex;
+  flex-direction: column;
+  float: right;
+  min-width: 80vw;
+}
+
+.ProfilePage{
+  display: flex;
+  flex-direction: row;
+  margin-top: 30px;
+  justify-content: center;
+}
+.ProgressPopUp{
+  display: flex;
+  justify-content: space-around;
+  position: relative;
+  background-color: lighten($primary-color,40%);
+}
+.Progress-container-item {
+  margin: 10px;
+  font-size: 20px;
+}
+.ProgressPopUp-close {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  font-size: 30px;
+  cursor: pointer;
+}
+.infoColumn{
+    margin-left: 40px; 
+}
+.infoColumn > h1 {
+font-weight: 500;
+}
+.ProfileField-values{
+  margin-top: 20px;
+  font-size: 22px;
+  font-weight: 500;
+  display: inline-block;
+}
+.ProfileField-button{
+  @extend .styledButton;
+  width: 6vw;
+  margin-left: 5px;
+  height: 4vh;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.ProfileField-button-save{
+  border-color: $grey;
+  color: $grey;
+  
+  &:hover{
+    background-color: $lightgrey;
+    color: $white;
+  }
+}
+
+.ProfileField-button-cancel{
+  border-color: $grey;
+  color: $grey;
+
+  &:hover{
+    background-color: $darkgrey;
+    color: $white;
+  }
+}
+
+.ProfileField-input{
+  @extend .input-text;
+  height: 4vh;
+  border-radius: 10px;
+  color: $black;
+  display: inline-block;
+  margin-top: 20px;
+}
+
+
+.Profile-Field-icon-container{
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  :hover{
+    cursor: pointer
+  }
+
+  .FontAwesomeIcon{
+    color: $grey;
+    margin-left: 8px;
+  
+    &:hover{
+      color: $primary-color;
+    }
+  }
+}
+
+
+
+.preview-profile-pic{
+  width: 150px;
+  height: 150px;
+  border-radius: 150px;
+  overflow: hidden;
+  display: block;
+}
+
+.info-column{
+  background-color: $lightgreyprofile;
+  border-radius: 2vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+}
+
+
+

@@ -1,0 +1,91 @@
+@import '../Utilities/variables';
+
+.container-header{
+  
+  display: flex;
+  max-width: 20vw;
+  min-height: 100vh;
+  flex-grow: 1;
+  transition: 0.5s ease-in-out;
+  background-color: $primary-color;
+  flex-direction: column;
+
+  &:hover{
+    box-shadow: 0 0 10px $shadow;
+  }
+
+  .icon-bars{
+    color: $white;
+  }
+  
+  .link-header{
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 2vw;
+    padding: 5px;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: right;
+    color: $white;
+    line-height: 7vh;
+    box-sizing: content-box;
+    border: 1px solid $primary-color;
+
+    &:hover{
+      border: 1px solid $white;
+    }
+  }
+
+  .search-container{
+    margin-right: 15px;
+    margin-top: 10px;
+  
+    .search-input{
+      float: right;
+      @extend .input-text;
+      height: 35px;
+      width: 180px;
+      border-radius: 10px;
+    }
+  }
+}
+
+
+.collapsed-container-header{
+  display: flex;
+  width: 10vw;
+  flex-direction: column;
+  overflow: auto;
+  background-color: $primary-color;
+  height: 100vh;
+  transition: 0.5s ease-in-out;
+
+  .icon-bars{
+    color: $white;
+  }
+  
+  .collapsed-link-header{
+    display: block;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 1.5vw;
+    padding: 5px;
+    text-decoration: none;
+    text-align: right;
+    color: $white;
+    line-height: 7vh;
+    box-sizing: border-box;
+    border: 1px solid $primary-color;
+
+    &:hover{
+      border: 1px solid $white;
+      border-radius: 10px;
+    }
+  }
+}
+
+
+
+
+
+

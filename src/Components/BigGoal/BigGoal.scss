@@ -1,0 +1,156 @@
+@import '../Utilities/_variables';
+
+.bigGoal-flex-wrap{
+  display: flex;
+  flex-direction: row;
+  flex-grow: 4;
+  transition: 0.5s ease-in-out;
+}
+
+.big-goal-wrap{
+    margin-left: 5px;
+}
+.big-goal-menu {
+    background-color: $primary-color;
+    font-size: 28px;
+    text-align: left;
+    padding-left: 30px;
+    cursor: pointer;
+}
+
+.big-goal-menu-btn {
+    display: inline-block;
+    color: $white;
+    margin-right: 50px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 30px 30px;
+
+    &:hover {
+        border: 1px solid $white;
+    }
+}
+
+.BigGoalApplying-item {
+    width: 18%;
+    word-wrap: break-word;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: $white;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 10px;
+    margin-bottom: 100px;
+
+    &:hover {
+        box-shadow: $shadow 0px 0 10px;
+    }
+}
+
+.BigGoalApplying-item-title {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.BigGoalApplying-container {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.BigGoalApplying-item-checked:after {
+    content: '';
+    display: block;
+    width: 80%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('./mark.png');
+}
+
+.big-goal-field {
+    display: flex;
+    flex-direction: column;
+    background-color: #BEDAFE;
+    border-radius: 0 0 10px 10px;
+}
+
+.bigGoalCreating-form-input {
+    width: 40vw;
+    margin: 40px 0;
+    text-align: center;
+    border: 1px solid #919191;
+    font-size: 17px;
+    display: block;
+    box-sizing: border-box;
+    padding: 10px 15px;
+    border-radius: 60px;
+    color: #1579FB;
+    position: relative;
+    height: 55px;
+    outline: none;
+}
+
+.bigGoalCreating-form {
+    width: 50vw;
+    text-align: left;
+    padding-left: 50px;
+}
+
+.bigGoalCreating-form-mes {
+    font-size: 28px;
+}
+
+.bigGoalCreating-form-btn {
+    margin: 40px 0;
+}
+
+.bigGoalApplying-wrap {
+    padding: 30px 50px;
+    text-align: left;
+}
+
+.BigGoalApplying-item-showDesc-btn {
+    width: 40px;
+    background-color: #ffffff;
+    border: 1px solid #1579FB;
+    line-height: 0;
+    font-size: 17px;
+    box-sizing: border-box;
+    padding: 18px 17px;
+    border-radius: 50%;
+    color: #1579FB;
+    cursor: pointer;
+    outline: none;
+
+    &:hover {
+        color: #ffffff;
+        background-color: #1579FB;
+
+    }
+}
+
+.BigGoalApplying-item-showDesc-wrap {
+    align-self: flex-end;
+    
+}
+
+.BigGoalApplying-item-description {
+    width: 100%;
+    background-color: #818181;
+    position: absolute;
+    top:100%;
+    right:0;
+    border-radius: 10px;
+    z-index: 10;
+    padding: 5px 30px;
+    box-sizing: border-box;
+}
+
+.BigGoalApplying-item-description-text {
+    font-size: 16px;
+    font-weight: 700;
+}

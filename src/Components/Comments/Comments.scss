@@ -1,0 +1,17 @@
+@import '../Utilities/variables';
+
+.comment-box{
+  border-color: $primary-color;
+}
+
+.comments-container{
+  margin-top: 20px;
+  .comments-textarea{
+    outline: none;
+    border-radius: 10px;
+    border-color: $primary-color;
+    font-size: 20px;
+  }
+}
+
+
