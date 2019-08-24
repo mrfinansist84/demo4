@@ -1,28 +1,42 @@
-import React from 'react';
-import Form from 'react-jsonschema-form';
+import React, { useState, useEffect } from 'react';
+import Form, {
+    validateJsonSchema,
+    mergeErrorSchema
+} from 'react-jsonschema-form';
 import { getWeekNumber } from './utils';
-
-const schema = {
-    title: 'Todo',
-    type: 'object',
-    required: ['login'],
-    properties: {
-        login: { type: 'string', title: 'User', default: 'User' },
-        password: { type: 'string', title: 'Pass', default: 'Pass' }
-    }
-};
-
-const uiSchema = {
-    email: {
-        'ui:widget': 'email'
-    }
-};
-
-const log = type => console.log.bind(console, type);
+import { schemaSignIn } from './schemaSignIn';
+import { schemaSignUp } from './schemaSignUp';
+import './Form.scss';
 
 const DynamicForm = props => {
-    const { signUpUser } = props;
-    const handleSubmit = ({ formData }) => {
+    const [errorLoginFlag, setErrorLoginFlag] = useState(false);
+    const [errorPasswordFlag, setErrorPasswordFlag] = useState(false);
+    const [errorRepasswordFlag, setErrorRepasswordFlag] = useState(false);
+    const errorLogin = errorLoginFlag ? 'Incorrect email or User exists' : ' ';
+    const errorPassword = errorPasswordFlag
+        ? 'Password should contain at least 1 special character & 1 uppercase letter & 1 digit'
+        : ' ';
+    const errorRepassword = errorRepasswordFlag ? 'Passwords don`t match' : ' ';
+    const uiSchema = {
+        login: {
+            'ui:widget': 'email',
+            'ui:placeholder': 'Email',
+            'ui:help': errorLogin
+        },
+        password: {
+            'ui:widget': 'password',
+            'ui:placeholder': 'Password',
+            'ui:help': errorPassword
+        },
+        repassword: {
+            'ui:widget': 'password',
+            'ui:placeholder': 'Repeat password',
+            'ui:help': errorRepassword
+        }
+    };
+    const [flag, setFlag] = useState(false);
+    const { signUpUser, signInUser } = props;
+    const handleSubmitSignUp = ({ formData }) => {
         const data = {
             ...formData,
             id: Date.now(),
@@ -30,12 +44,45 @@ const DynamicForm = props => {
             validate: true,
             weekNumber: getWeekNumber()
         };
-
-        return signUpUser(data);
+        return signUpUser(data, setErrorLoginFlag, setErrorPasswordFlag, setErrorRepasswordFlag);
+    };
+    const handleSubmitSignIn = ({ formData }) => {
+        return signInUser(formData, setErrorLoginFlag, setErrorPasswordFlag);
     };
 
+    const schema = flag ? schemaSignIn : schemaSignUp;
+    const handleSubmit = flag ? handleSubmitSignIn : handleSubmitSignUp;
+    const text = flag ? 'In' : 'Up';
+
+    useEffect(() => {
+        setFlag(document.URL.includes('signin'));
+    });
+
     return (
-        <Form schema={schema} onSubmit={handleSubmit} onError={log('errors')} />
+      <div className="FormView">
+          <div className="FormView-main-container">
+              <div className="FormView-left-side">
+                  <span>Sign</span>
+                  <span>{text}</span>
+                </div>
+              <div className="FormView-right-side">
+                  <Form
+                      schema={schema}
+                      onSubmit={handleSubmit}
+                      uiSchema={uiSchema}
+                    >
+                      <button
+                          type="submit"
+                          onSubmit={handleSubmit}
+                          className="FormView-button-submit"
+                        >Sign
+                          {' '}
+                          {text}
+                        </button>
+                    </Form>
+                </div>
+            </div>
+        </div>
     );
 };
 

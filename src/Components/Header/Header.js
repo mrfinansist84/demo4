@@ -7,9 +7,8 @@ import './Header.scss';
  
 
 const Header = props => {
-  const { nicknames, userNickname, signOut, switchToFriendsProfile } = props;
+  const { allNicknames, userNickname, signOut, switchToFriendsProfile } = props;
   const [showHeader, setHeaderState] = useState(true);
-
   const logout = () => {
     localStorage.clear();
     signOut();
@@ -42,7 +41,7 @@ const Header = props => {
       <span>Sign Out</span>
       
     </Link>
-    <Search allNicknames={nicknames} currUserNickname={userNickname} switchToFriendsProfile={switchToFriendsProfile}/>
+    <Search allNicknames={allNicknames} switchToFriendsProfile={switchToFriendsProfile}/>
   </header>
     )}
 

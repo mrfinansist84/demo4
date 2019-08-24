@@ -7,6 +7,7 @@ import ProfileImage from './ProfileImage';
 import './Profile.scss';
 
 const FriendsProfile = props => {
+    console.log('friends profile', props);
     const {
         pathname,
         loadFriendsInfo,
@@ -15,8 +16,7 @@ const FriendsProfile = props => {
         friendsAge,
         friendsNickname,
         friendsImage,
-        saveNewProfileField,
-        allNicknames
+        saveNewProfileField
     } = props;
     
     let friendsUid = pathname.replace(`\/friend\/`, '');
@@ -24,11 +24,10 @@ const FriendsProfile = props => {
             const uid = pathname.replace(`\/friend\/`, '');
             loadFriendsInfo(uid);
         
-    }, []);
+    }, [pathname]);
 
     
-    const userDate = new Date(friendsUid).toLocaleDateString('en-US');
-    console.log('friends uid',new Date (friendsUid));
+    const userDate = new Date(Number(friendsUid)).toLocaleDateString('en-US');
     const [profilePic, setProfilePic] = useState();
     const [profileName, setProfileName] = useState(friendsName);
     const [profileAge, setProfileAge] = useState(friendsAge);
@@ -53,7 +52,7 @@ const FriendsProfile = props => {
     return (
         <div>
         <div className='ProfileWrapper-flex'>
-          <Header nicknames={allNicknames} userNickname={friendsNickname}/>
+          <Header />
           <div className="ProfilePageWrapper">
               <div className="ProfilePage">
                 { <Chart options={options} series={series} /> }

@@ -152,7 +152,14 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 [action.taskType]: action.payload
-            };            
+            };       
+            case 'SET_USER_DATA_BG':
+                return {
+                    ...state,
+                    [action.typeBigGoal]: action.payload
+                };
+            
+            
         default:
             return state;
     }

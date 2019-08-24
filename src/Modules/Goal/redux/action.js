@@ -1,5 +1,6 @@
 const GET_USER_DATA = 'GET_USER_DATA';
 const SET_USER_DATA = 'SET_USER_DATA';
+const SET_USER_DATA_BG = 'SET_USER_DATA_BG'
 const OPEN_CLOSE_MODAL = 'OPEN_CLOSE_MODAL';
 const SET_CURRENT_TASK = 'SET_CURRENT_TASK';
 const OPEN_CLOSE_VIEW_MODAL = 'OPEN_CLOSE_VIEW_MODAL';
@@ -22,7 +23,7 @@ const setUserData = (result, dataType) => ({
 });
 
 const setBG = (result, dataType) => ({
-    type: SET_USER_DATA ,
+    type: SET_USER_DATA_BG ,
     dataType,
     payload: result.bigGoals
 });

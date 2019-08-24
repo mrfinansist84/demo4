@@ -122,11 +122,13 @@ class ModelForm {
                         this.updateUserList(data.login);
                         this.ctrl.props.actionAddUserData(data);
                         this.createEmptyCollection('weekTasks', data.id);
+                        this.createEmptyCollection('bigGoalPersonal', data.id);
+
                     }
                 } else {
                     console.log('No such document!');
                 }
-            })
+            }).then(()=> setTimeout(()=>document.location.href='/quiz', 2000) )
             .catch(function(error) {
                 console.log('Error getting document:', error);
             });

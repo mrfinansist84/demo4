@@ -9,7 +9,6 @@ import './Profile.scss';
 import store from '../../store';
 
 const NewProfile = props => {
-    console.log('props', props)
     const {
         getUserDataProfile,
         wheels = '',

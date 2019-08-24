@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 const Search = props => {
-  const {allNicknames, currUserNickname, switchToFriendsProfile} = props;
+  const {allNicknames, switchToFriendsProfile} = props;
   const [searchInputValue, setSearchInputValue] = useState('');
   const [searchResult, setSearchResult] = useState('');
 
   useEffect(()=>{
     let filteredSearch = [];
+    let currUserUid = localStorage.getItem('userId');
     filteredSearch = (allNicknames||[]).filter(nick=>{
-      if(nick.nickname!==currUserNickname){ 
-        return nick
+      if(nick.uid!==Number(currUserUid)){
+        return nick;
        }
     });
     setSearchResult(filteredSearch);
