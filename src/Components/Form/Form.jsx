@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Form, {
-    validateJsonSchema,
-    mergeErrorSchema
-} from 'react-jsonschema-form';
+import Form from 'react-jsonschema-form';
 import { getWeekNumber } from './utils';
 import { schemaSignIn } from './schemaSignIn';
 import { schemaSignUp } from './schemaSignUp';
+import { checkForm, checkUserData } from '../../DAL/formFirebase';
 import './Form.scss';
 
 const DynamicForm = props => {
@@ -35,19 +33,42 @@ const DynamicForm = props => {
         }
     };
     const [flag, setFlag] = useState(false);
-    const { signUpUser, signInUser } = props;
+    const { signUpUser } = props;
     const handleSubmitSignUp = ({ formData }) => {
-        const data = {
-            ...formData,
-            id: Date.now(),
-            testDone: false,
-            validate: true,
-            weekNumber: getWeekNumber()
-        };
-        return signUpUser(data, setErrorLoginFlag, setErrorPasswordFlag, setErrorRepasswordFlag);
+        if (
+            checkForm(
+                formData,
+                setErrorLoginFlag,
+                setErrorPasswordFlag,
+                setErrorRepasswordFlag
+            )
+        ) {
+            const data = {
+                ...formData,
+                id: Date.now(),
+                testDone: false,
+                validate: true,
+                weekNumber: getWeekNumber()
+            };
+            return signUpUser(data);
+        }
     };
     const handleSubmitSignIn = ({ formData }) => {
-        return signInUser(formData, setErrorLoginFlag, setErrorPasswordFlag);
+        if (
+            checkForm(
+                formData,
+                setErrorLoginFlag,
+                setErrorPasswordFlag,
+                setErrorRepasswordFlag
+            )
+        ) {
+            checkUserData(
+                formData,
+                setErrorLoginFlag,
+                setErrorPasswordFlag,
+                setErrorRepasswordFlag
+            )
+        }
     };
 
     const schema = flag ? schemaSignIn : schemaSignUp;
@@ -59,25 +80,27 @@ const DynamicForm = props => {
     });
 
     return (
-      <div className="FormView">
-          <div className="FormView-main-container">
-              <div className="FormView-left-side">
-                  <span>Sign</span>
-                  <span>{text}</span>
+        <div className="FormView">
+            <div className="FormView-main-container">
+                <div className="FormView-left-side">
+                    <span>Sign</span>
+                    <span>{text}</span>
                 </div>
-              <div className="FormView-right-side">
-                  <Form
-                      schema={schema}
-                      onSubmit={handleSubmit}
-                      uiSchema={uiSchema}
+                <div className="FormView-right-side">
+                    <Form
+                        noHtml5Validate
+                        schema={schema}
+                        onSubmit={handleSubmit}
+                        uiSchema={uiSchema}
                     >
-                      <button
-                          type="submit"
-                          onSubmit={handleSubmit}
-                          className="FormView-button-submit"
-                        >Sign
-                          {' '}
-                          {text}
+                        <button
+                            type="submit"
+                            onSubmit={handleSubmit}
+                            className="FormView-button-submit"
+                        >
+                            Sign
+{' '}
+                            {text}
                         </button>
                     </Form>
                 </div>

@@ -1,22 +1,33 @@
 import firebase from 'firebase';
 import { db } from '../config';
 
-function getSignInToken(data) {
+function checkUserData(data, setErrorLoginFlag, setErrorPasswordFlag) {
+    let wrongLogin = true;
+    let wrongPassword = true;
+
     db.collection('users')
         .doc('usersData')
         .get()
         .then(doc => {
             doc.data().users.forEach(ud => {
                 const user = ud.hasOwnProperty('data') ? ud.data : ud;
-                if (
-                    user.login === data.login &&
-                    user.password === data.password
-                ) {
-                    localStorage.setItem('userId', user.id);
-                } else {
-                    throw new Error('wrongPass', 'noEmail');
+                if (user.login === data.login) {
+                    wrongLogin = false;
+                    if (user.password === data.password) {
+                        wrongPassword = false;
+                        if (!wrongLogin && !wrongPassword) {
+                            localStorage.setItem('userId', user.id);
+                            document.location.href = '/myProfile';
+                        }
+                    }
                 }
             });
+            if (wrongLogin) {
+                setErrorLoginFlag(true);
+            }
+            if (wrongPassword) {
+                setErrorPasswordFlag(true);
+            }
         });
 }
 
@@ -35,36 +46,32 @@ function updateUserList(email) {
         usersList: firebase.firestore.FieldValue.arrayUnion(email)
     });
 }
+function checkForm(
+    data,
+    setErrorLoginFlag,
+    setErrorPasswordFlag,
+    setErrorRepasswordFlag
+) {
+    const regEmail = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/;
+    const regPassword = /(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}/g;
+    let res = true;
 
-function getUserData(data) {
-    let check = true;
-
-    db.collection('users')
-        .doc('usersList')
-        .get()
-        .then(doc => {
-            if (doc.exists) {
-                doc.data().usersList.forEach(el => {
-                    if (el === data.login) {
-                        check = false;
-                    }
-                });
-                if (check) {
-                    localStorage.setItem('userId', data.id);
-                    localStorage.setItem('testDone', false);
-                    updateUserData(data);
-                    updateUserList(data.login);
-                    createEmptyCollection('weekTasks', data.id);
-                }
-            } else {
-                console.log('No such document!');
-            }
-        })
-        .catch(function(error) {
-            console.log('Error getting document:', error);
-        });
+    if (!regEmail.test(data.login)) {
+        setErrorLoginFlag(true);
+        res = false;
+    }
+    if (!regPassword.test(data.password)) {
+        setErrorPasswordFlag(true);
+        res = false;
+    }
+    if (data.hasOwnProperty('repassword')) {
+        if (data.password !== data.repassword) {
+            setErrorRepasswordFlag(true);
+            res = false;
+        }
+    }
+    return res;
 }
-
 function createEmptyCollection(el, userId) {
     db.collection(`${el}`)
         .doc(`${userId}`)
@@ -83,4 +90,4 @@ function redirectToQuiz() {
     document.location.href = '/quiz';
 }
 
-export { getSignInToken, getUserData };
+export { checkUserData, sendUserData, redirectToQuiz, checkForm };

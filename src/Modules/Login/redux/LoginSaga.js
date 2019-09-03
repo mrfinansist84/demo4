@@ -1,18 +1,17 @@
 import { takeLatest } from 'redux-saga/effects';
-import { getUserData } from '../../../DAL/formfirebase';
+import { sendUserData, redirectToQuiz } from '../../../DAL/formFirebase';
 
-function* LoginSaga(action) {
+function* signUpSaga({ data }) {
     try {
-        const res = yield getUserData();
+        yield sendUserData(data);
+        yield redirectToQuiz();
     } catch (e) {
         console.error(e);
     }
 }
 
 function* LoginSagaWatcher() {
-    yield takeLatest('SIGN_UP_USER', LoginSaga);
-    yield takeLatest('SIGN_UP_USER', LoginSaga);
-    yield takeLatest('SIGN_UP_USER', LoginSaga);
+    yield takeLatest('SIGN_UP_USER', signUpSaga);
 }
 
 export default LoginSagaWatcher;
